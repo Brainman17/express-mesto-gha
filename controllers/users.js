@@ -61,9 +61,15 @@ const updateUser = (req, res) => {
       { new: true, runValidators: true, upsert: true }
     )
     .then((user) => {
-      res.send({ data: user })
+      res.send({ data: user });
     })
-    .catch((err) => res.status(500).send(err.message));
+    .catch((e) => {
+      if (e.message === "Not Found") {
+        res.status(404).send({ message: "User not Found!" });
+      } else {
+        res.status(500).send({ message: "Smth went wrong!" });
+      }
+    });
 };
 
 const updateAvatar = (req, res) => {
@@ -75,8 +81,16 @@ const updateAvatar = (req, res) => {
       { avatar: req.body.avatar },
       { new: true, runValidators: true, upsert: true }
     )
-    .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send(err.message));
+    .then((user) => {
+      res.send({ data: user });
+    })
+    .catch((e) => {
+      if (e.message === "Not Found") {
+        res.status(404).send({ message: "Avatar not Found!" });
+      } else {
+        res.status(500).send({ message: "Smth went wrong!" });
+      }
+    });
 };
 
 module.exports = {
