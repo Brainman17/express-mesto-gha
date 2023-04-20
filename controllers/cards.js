@@ -1,7 +1,12 @@
-const cardSchema = require("../models/cards");
+const card = require("../models/cards");
+// const {
+//   ERROR_NOT_FOUND,
+//   ERROR_BAD_DATA,
+//   ERROR_DEFAULT
+// } = require("../errors/constants");
 
 const getCards = (req, res) => {
-  cardSchema
+  card
     .find({})
     .then((cards) => {
       res.send({ data: cards });
@@ -15,7 +20,7 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
 
-  cardSchema
+  card
     .create({ name, link, owner })
     .then((card) => {
       res.status(201).send({ data: card });
@@ -33,14 +38,14 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  cardSchema
+  card
     .findByIdAndRemove(req.params.id)
     .then((card) => res.send({ data: card }))
     .catch((err) => res.status(500).send(err.message));
 };
 
 const likeCard = (req, res) => {
-  cardSchema
+  card
     .findByIdAndUpdate(
       req.params.cardId,
       {
@@ -53,7 +58,7 @@ const likeCard = (req, res) => {
 };
 
 const dislikeCard = (req, res) => {
-  cardSchema
+  card
     .findByIdAndUpdate(
       req.params.cardId,
       {

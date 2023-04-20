@@ -1,7 +1,13 @@
-const userSchema = require("../models/users");
+const user = require("../models/users");
 
-const getUsers = (req, res) => {
-  userSchema
+// const {
+//   ERROR_NOT_FOUND,
+//   ERROR_BAD_DATA,
+//   ERROR_DEFAULT
+// } = require("../errors/constants");
+
+const getUsers = (req, res,) => {
+  user
     .find({})
     .then((users) => {
       res.send({ data: users });
@@ -14,7 +20,7 @@ const getUsers = (req, res) => {
 const getUser = (req, res) => {
   const { id } = req.params;
 
-  userSchema
+  user
     .findById(id)
     .orFail(() => {
       throw new Error("Not Found");
@@ -34,7 +40,7 @@ const getUser = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
 
-  userSchema
+  user
     .create({ name, about, avatar })
     .then((user) => {
       res.status(201).send({ data: user });
@@ -54,7 +60,7 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const userId = req.user._id;
 
-  userSchema
+  user
     .findByIdAndUpdate(
       userId,
       { name: req.body.name, about: req.body.about },
@@ -69,7 +75,7 @@ const updateUser = (req, res) => {
 const updateAvatar = (req, res) => {
   const userId = req.user._id;
 
-  userSchema
+  user
     .findByIdAndUpdate(
       userId,
       { avatar: req.body.avatar },
