@@ -12,11 +12,10 @@ const getUsers = (req, res,) => {
 };
 
 const getUser = (req, res) => {
-  // const { id } = req.params;
-  // console.log(req.user._id)
+  const { userId } = req.params;
 
   user
-    .findById(req.user)
+    .findById(userId)
     .orFail(() => {
       throw new Error("Not Found");
     })
