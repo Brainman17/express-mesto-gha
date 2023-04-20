@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const user = require('./users');
 
 const cardSchema = new mongoose.Schema({
   name: { //имя карточки
@@ -9,17 +10,16 @@ const cardSchema = new mongoose.Schema({
   },
   link: { //ссылка на картинку
     type: String,
-    ref: 'card',
     required: true
   },
   owner: { //ссылка на модель автора карточки
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: user,
     required: true
   },
   likes: [{ //список лайкнувших пост пользователей
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: user,
     default: []
   }],
   createdAt: { //дата создания
