@@ -1,11 +1,5 @@
 const user = require("../models/users");
 
-// const {
-//   ERROR_NOT_FOUND,
-//   ERROR_BAD_DATA,
-//   ERROR_DEFAULT
-// } = require("../errors/constants");
-
 const getUsers = (req, res,) => {
   user
     .find({})
@@ -18,10 +12,11 @@ const getUsers = (req, res,) => {
 };
 
 const getUser = (req, res) => {
-  const { id } = req.params;
+  // const { id } = req.params;
+  // console.log(req.user._id)
 
   user
-    .findById(id)
+    .findById(req.user)
     .orFail(() => {
       throw new Error("Not Found");
     })
