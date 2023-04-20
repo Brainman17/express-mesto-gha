@@ -26,7 +26,7 @@ const getUser = (req, res) => {
       if (e.message === "Not Found") {
         res.status(404).send({ message: "User not Found!" });
       } else {
-        res.status(500).send({ message: "Smth went wrong!" });
+        res.status(400).send({ message: "Smth went wrong!" });
       }
     });
 };
