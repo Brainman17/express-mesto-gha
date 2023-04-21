@@ -79,13 +79,9 @@ const dislikeCard = (req, res) => {
       { new: true, runValidators: true, upsert: true }
     )
     .orFail(new NotFoundError("Карточка с таким id не существует!"))
-    // .then((card) =>  {
-    //   if(!card) {
-    //     throw new NotFoundError();
-    //   } else {
-    //     return res.send({ data: card })
-    //   }
-    // })
+    .then((card) =>  {
+      res.send({ data: card })
+    })
     .catch((err) => {
       handleErrors(err, res);
     });
