@@ -40,11 +40,7 @@ const deleteCard = (req, res) => {
       throw new NotFoundError("Карточка с таким id не существует!")
     })
     .then((card) => {
-      if(card) {
-        res.send({ data: card })
-      } else {
-        throw new NotFoundError("Карточка с таким id не существует!")
-      }
+      res.send({ data: card })
     })
     .catch((err) => {
       handleErrors(err, res)
