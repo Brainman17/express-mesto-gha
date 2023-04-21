@@ -72,7 +72,7 @@ const dislikeCard = (req, res) => {
     )
     .orFail(new NotFoundError("Карточки с таким id не существует!"))
     .then((card) =>  {
-      if(card) {
+      if(!card) {
         throw new NotFoundError();
       } else {
         return res.send({ data: card })
