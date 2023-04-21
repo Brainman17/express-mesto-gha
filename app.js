@@ -17,6 +17,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('*', (req, res) => {
+  res.status(404).send({ message: "Данные не найдены!" });
+});
+
 app.use(userRouter);
 app.use(cardRouter);
 
