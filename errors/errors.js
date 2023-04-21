@@ -9,7 +9,7 @@ class NotFoundError extends Error {
 }
 
  const ERROR_NOT_FOUND = 404;
- const ERROR_BAD_REQUEST = 404;
+ const ERROR_BAD_REQUEST = 400;
  const ERROR_SERVER = 500;
 
  module.exports.handleErrors = (err, res) => {
