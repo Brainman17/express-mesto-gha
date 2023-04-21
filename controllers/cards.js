@@ -36,6 +36,7 @@ const createCard = (req, res) => {
 const deleteCard = (req, res) => {
   card
     .findByIdAndRemove(req.params.cardId)
+    .orFail(new NotFoundError("Карточки с таким id не существует!"))
     .then((card) => res.send({ data: card }))
     .catch((err) => handleErrors(err, res));
 };
@@ -49,6 +50,7 @@ const likeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
+    .orFail(new NotFoundError("Карточки с таким id не существует!"))
     .then((card) => {
       if (card) {
         card.populate(['owner', 'likes'])
@@ -74,6 +76,7 @@ const dislikeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
+    .orFail(new NotFoundError("Карточки с таким id не существует!"))
     .then((card) => {
       if (card) {
         card.populate(['owner', 'likes'])
