@@ -1,5 +1,5 @@
 const card = require("../models/cards");
-const { handleErrors } = require("../errors/errors")
+const { handleErrors, NotFoundError } = require("../errors/errors")
 
 const getCards = (req, res) => {
   card
@@ -49,7 +49,13 @@ const likeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .then((card) => res.send({ data: card }))
+    .then((card) =>  {
+      if(!card) {
+        throw new NotFoundError();
+      } else {
+        return res.send({ data: card })
+      }
+    })
     .catch((err) => handleErrors(err, res));
 };
 
@@ -62,7 +68,13 @@ const dislikeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .then((card) => res.send({ data: card }))
+    .then((card) =>  {
+      if(!card) {
+        throw new NotFoundError();
+      } else {
+        return res.send({ data: card })
+      }
+    })
     .catch((err) => handleErrors(err, res));
 };
 

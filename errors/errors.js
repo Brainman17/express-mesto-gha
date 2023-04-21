@@ -22,4 +22,4 @@ class NotFoundError extends Error {
   return res.status(ERROR_SERVER).send({ message: "Ошибка сервера!" })
  }
 
- module.exports = { handleErrors }
+ module.exports = { handleErrors, NotFoundError }
