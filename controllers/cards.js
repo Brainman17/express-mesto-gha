@@ -58,10 +58,9 @@ const likeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .orFail(new NotFoundError("Карточка с таким id не существует!"))
     .then((card) =>  {
       if(!card) {
-        throw new NotFoundError();
+        throw new NotFoundError("Карточка с таким id не существует!");
       } else {
         return res.send({ data: card })
       }
