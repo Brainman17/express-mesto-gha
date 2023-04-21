@@ -17,12 +17,20 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(userRouter);
+app.use(cardRouter);
+
 app.use('*', (req, res) => {
   res.status(404).send({ message: "Данные не найдены!" });
 });
 
-app.use(userRouter);
-app.use(cardRouter);
+app.use('*', (req, res) => {
+  res.status(400).send({ message: "Неккоректные данные!" });
+});
+
+app.use('*', (req, res) => {
+  res.status(500).send({ message: "Данные не найдены!" });
+});
 
 app.listen(PORT, () => {
   console.log(`Application listening on ${PORT}!`);
