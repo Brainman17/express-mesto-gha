@@ -12,7 +12,7 @@ class NotFoundError extends Error {
  const ERROR_BAD_REQUEST = 400;
  const ERROR_SERVER = 500;
 
- module.exports.handleErrors = (err, res) => {
+ const handleErrors = (err, res) => {
   if(err instanceof NotFoundError) {
     return res.status(ERROR_NOT_FOUND).send({ message: "Данные не найдены!" })
   }
@@ -21,3 +21,5 @@ class NotFoundError extends Error {
   }
   return res.status(ERROR_SERVER).send({ message: "Ошибка сервера!" })
  }
+
+ module.exports = { handleErrors }
