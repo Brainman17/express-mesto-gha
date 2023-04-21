@@ -64,7 +64,7 @@ const updateUser = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => {handleErrors(err, res)});
+    .catch((err) => handleErrors(err, res));
 };
 
 const updateAvatar = (req, res) => {
@@ -79,13 +79,7 @@ const updateAvatar = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((e) => {
-      if (e.message === "Not Found") {
-        res.status(400).send({ message: "Avatar not Found!" });
-      } else {
-        res.status(500).send({ message: "Smth went wrong!" });
-      }
-    });
+    .catch((err) => handleErrors(err, res));
 };
 
 module.exports = {
