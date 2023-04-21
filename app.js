@@ -17,6 +17,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('*', (req, res) => {
+  res.status(404).send({ message: "Данные не найдены!" });
+});
+
+app.use('*', (req, res) => {
+  res.status(400).send({ message: "Неккоректные данные!" });
+});
+
+app.use('*', (req, res) => {
+  res.status(500).send({ message: "Ошибка сервера!" });
+});
+
 app.use(userRouter);
 app.use(cardRouter);
 
