@@ -36,11 +36,16 @@ const createCard = (req, res) => {
 const deleteCard = (req, res) => {
   card
     .findByIdAndRemove(req.params.cardId)
-    .orFail(new NotFoundError("Карточки с таким id не существует!"))
-    .then((card) => res.send({ data: card }))
+    .orFail(new NotFoundError("Карточка с таким id не существует!"))
+    .then((card) => {
+      if(card) {
+        res.send({ data: card })
+      } else {
+        throw new NotFoundError("Карточка с таким id не существует!")
+      }
+    })
     .catch((err) => {
       handleErrors(err, res)
-      new NotFoundError("Карточки с таким id не существует!")
     });
 };
 
@@ -53,7 +58,7 @@ const likeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .orFail(new NotFoundError("Карточки с таким id не существует!"))
+    .orFail(new NotFoundError("Карточка с таким id не существует!"))
     .then((card) =>  {
       if(!card) {
         throw new NotFoundError();
@@ -73,7 +78,7 @@ const dislikeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .orFail(new NotFoundError("Карточки с таким id не существует!"))
+    .orFail(new NotFoundError("Карточка с таким id не существует!"))
     .then((card) =>  {
       if(!card) {
         throw new NotFoundError();
@@ -83,7 +88,6 @@ const dislikeCard = (req, res) => {
     })
     .catch((err) => {
       handleErrors(err, res);
-      new NotFoundError("Карточки с таким id не существует!")
     });
 };
 
