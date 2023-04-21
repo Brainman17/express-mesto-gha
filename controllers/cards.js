@@ -1,9 +1,5 @@
 const card = require("../models/cards");
-// const {
-//   ERROR_NOT_FOUND,
-//   ERROR_BAD_DATA,
-//   ERROR_DEFAULT
-// } = require("../errors/constants");
+const handleErrors = require("../errors/errors")
 
 const getCards = (req, res) => {
   card
@@ -54,7 +50,7 @@ const likeCard = (req, res) => {
       { new: true, runValidators: true, upsert: true }
     )
     .then((card) => res.send({ data: card }))
-    .catch((err) => res.status(500).send(err.message));
+    .catch((err) => handleErrors(err, res));
 };
 
 const dislikeCard = (req, res) => {
@@ -67,7 +63,7 @@ const dislikeCard = (req, res) => {
       { new: true, runValidators: true, upsert: true }
     )
     .then((card) => res.send({ data: card }))
-    .catch((err) => res.status(500).send(err.message));
+    .catch((err) => handleErrors(err, res));
 };
 
 module.exports = {
