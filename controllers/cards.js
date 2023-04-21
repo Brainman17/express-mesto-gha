@@ -36,7 +36,9 @@ const createCard = (req, res) => {
 const deleteCard = (req, res) => {
   card
     .findByIdAndRemove(req.params.cardId)
-    .orFail(new NotFoundError("Карточка с таким id не существует!"))
+    .orFail(() => {
+      throw new NotFoundError("Карточка с таким id не существует!")
+    })
     .then((card) => {
       if(card) {
         res.send({ data: card })
@@ -78,7 +80,7 @@ const dislikeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
-    .orFail(()=> {
+    .orFail(() => {
       throw new NotFoundError("Карточка с таким id не существует!")
     })
     .then((card) =>  {
