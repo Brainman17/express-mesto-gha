@@ -1,4 +1,5 @@
 const user = require("../models/users");
+const { handleErrors } = require("../errors/errors")
 
 const getUsers = (req, res,) => {
   user
@@ -63,14 +64,7 @@ const updateUser = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((e) => {
-      console.log(e.message)
-      if (e.message === "Not Found") {
-        res.status(400).send({ message: "User not Found!" });
-      } else {
-        res.status(500).send({ message: "Smth went wrong!" });
-      }
-    });
+    .catch((err) => {handleErrors(err, res)});
 };
 
 const updateAvatar = (req, res) => {
