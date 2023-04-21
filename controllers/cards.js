@@ -49,6 +49,12 @@ const likeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
+    .then((card) => {
+      if (card) {
+        card.populate(['owner', 'likes'])
+      }
+      return card;
+    })
     .then((card) =>  {
       if(!card) {
         throw new NotFoundError();
@@ -68,6 +74,12 @@ const dislikeCard = (req, res) => {
       },
       { new: true, runValidators: true, upsert: true }
     )
+    .then((card) => {
+      if (card) {
+        card.populate(['owner', 'likes'])
+      }
+      return card;
+    })
     .then((card) =>  {
       if(!card) {
         throw new NotFoundError();
