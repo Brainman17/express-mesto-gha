@@ -78,7 +78,10 @@ const dislikeCard = (req, res) => {
         return res.send({ data: card })
       }
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => {
+      handleErrors(err, res);
+      new NotFoundError("Карточки с таким id не существует!")
+    });
 };
 
 module.exports = {
