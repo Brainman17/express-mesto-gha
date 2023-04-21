@@ -44,7 +44,7 @@ const createUser = (req, res) => {
         const message = Object.values(e.errors)
           .map((error) => error.message)
           .join("; ");
-        res.status(404).send({ message });
+        res.status(400).send({ message });
       } else {
         res.status(500).send({ message: "Smth went wrong!" });
       }
