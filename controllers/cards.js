@@ -38,7 +38,10 @@ const deleteCard = (req, res) => {
     .findByIdAndRemove(req.params.cardId)
     .orFail(new NotFoundError("Карточки с таким id не существует!"))
     .then((card) => res.send({ data: card }))
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => {
+      handleErrors(err, res)
+      new NotFoundError("Карточки с таким id не существует!")
+    });
 };
 
 const likeCard = (req, res) => {
