@@ -53,7 +53,7 @@ const updateUser = (req, res) => {
     .findByIdAndUpdate(
       userId,
       { name: req.body.name, about: req.body.about },
-      { new: true, runValidators: true, upsert: true }
+      { new: true, runValidators: true }
     )
     .then((user) => {
       res.send({ data: user });
