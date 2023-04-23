@@ -1,25 +1,24 @@
 const mongoose = require('mongoose');
-const user = require('./users');
 
 const cardSchema = new mongoose.Schema({
   name: { //имя карточки
     type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 30
+    required: [true, 'Поле "name" должно быть заполнено'],
+    minlength: [2, 'Минимальная длина поля "name" - 2'],
+    maxlength: [30, 'Минимальная длина поля "name" - 30']
   },
   link: { //ссылка на картинку
     type: String,
-    required: true
+    required: [true, 'Поле "link" должно быть заполнено']
   },
   owner: { //ссылка на модель автора карточки
     type: mongoose.Schema.Types.ObjectId,
-    ref: user,
-    required: true
+    ref: 'user',
+    required: [true, 'Поле "owner" должно быть заполнено']
   },
   likes: [{ //список лайкнувших пост пользователей
     type: mongoose.Schema.Types.ObjectId,
-    ref: user,
+    ref: 'user',
     default: []
   }],
   createdAt: { //дата создания

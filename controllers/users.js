@@ -23,13 +23,7 @@ const getUser = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((e) => {
-      if (e.message === "Not Found") {
-        res.status(404).send({ message: "User not Found!" });
-      } else {
-        res.status(400).send({ message: "Smth went wrong!" });
-      }
-    });
+    .catch((err) => handleErrors(err, res));
 };
 
 const createUser = (req, res) => {
@@ -74,7 +68,7 @@ const updateAvatar = (req, res) => {
     .findByIdAndUpdate(
       userId,
       { avatar: req.body.avatar },
-      { new: true, runValidators: true, upsert: true }
+      { new: true, runValidators: true }
     )
     .then((user) => {
       res.send({ data: user });
