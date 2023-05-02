@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { CastError, ValidationError } = mongoose.Error;
+const { ERROR_NOT_FOUND, ERROR_BAD_REQUEST, ERROR_SERVER } = require('../utils/constants');
+
 class NotFoundError extends Error {
   constructor(message) {
     super(message);
@@ -7,10 +9,6 @@ class NotFoundError extends Error {
     this.name = 'NotFoundError';
   }
 }
-
- const ERROR_NOT_FOUND = 404;
- const ERROR_BAD_REQUEST = 400;
- const ERROR_SERVER = 500;
 
  const handleErrors = (err, res) => {
   if(err instanceof NotFoundError) {
