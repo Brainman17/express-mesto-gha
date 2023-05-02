@@ -7,15 +7,16 @@ const {
   likeCard,
   dislikeCard,
 } = require("../controllers/cards");
+const celebrates = require('../middlewares/celebrates');
 
 cardRouter.get("/cards", getCards);
 
-cardRouter.post("/cards", createCard);
+cardRouter.post("/cards", celebrates.createCard, createCard);
 
-cardRouter.delete("/cards/:cardId", deleteCard);
+cardRouter.delete("/cards/:cardId", celebrates.checkIdCard, deleteCard);
 
-cardRouter.put("/cards/:cardId/likes", likeCard);
+cardRouter.put("/cards/:cardId/likes", celebrates.checkIdCard, likeCard);
 
-cardRouter.delete("/cards/:cardId/likes", dislikeCard);
+cardRouter.delete("/cards/:cardId/likes", celebrates.checkIdCard, dislikeCard);
 
 module.exports = { cardRouter };

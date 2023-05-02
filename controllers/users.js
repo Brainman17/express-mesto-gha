@@ -1,7 +1,7 @@
 const user = require("../models/users");
-const { handleErrors } = require("../errors/errors")
+const { handleErrors } = require("../errors/errors");
 
-const getUsers = (req, res,) => {
+const getUsers = (req, res) => {
   user
     .find({})
     .then((users) => {
@@ -26,24 +26,18 @@ const getUser = (req, res) => {
     .catch((err) => handleErrors(err, res));
 };
 
-const createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
+const getMe = (req, res) => {
+  const { userId } = req.params;
 
   user
-    .create({ name, about, avatar })
-    .then((user) => {
-      res.status(201).send({ data: user });
+    .findById(userId)
+    .orFail(() => {
+      throw new Error("Not Found");
     })
-    .catch((e) => {
-      if (e.name === "ValidationError") {
-        const message = Object.values(e.errors)
-          .map((error) => error.message)
-          .join("; ");
-        res.status(400).send({ message });
-      } else {
-        res.status(500).send({ message: "Smth went wrong!" });
-      }
-    });
+    .then((user) => {
+      res.send({ data: user });
+    })
+    .catch((err) => handleErrors(err, res));
 };
 
 const updateUser = (req, res) => {
@@ -79,7 +73,7 @@ const updateAvatar = (req, res) => {
 module.exports = {
   getUsers,
   getUser,
-  createUser,
+  getMe,
   updateUser,
   updateAvatar,
 };
