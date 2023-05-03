@@ -10,6 +10,20 @@ class NotFoundError extends Error {
   }
 }
 
+class UnauthorizedError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 401;
+  }
+}
+
+class ForbiddenError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 403;
+  }
+}
+
  const handleErrors = (err, res) => {
   if(err instanceof NotFoundError) {
     return res.status(ERROR_NOT_FOUND).send({ message: "Данные не найдены!" })
@@ -20,4 +34,4 @@ class NotFoundError extends Error {
   return res.status(ERROR_SERVER).send({ message: "Ошибка сервера!" })
  }
 
- module.exports = { handleErrors, NotFoundError }
+ module.exports = { handleErrors, NotFoundError, UnauthorizedError, ForbiddenError }

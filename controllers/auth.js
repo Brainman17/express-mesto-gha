@@ -1,6 +1,7 @@
 const user = require("../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { UnauthorizedError } = require("../errors/errors");
 
 const login = (req, res) => {
   const { email, password } = req.body;
@@ -15,7 +16,7 @@ const login = (req, res) => {
       res.send({ token });
     })
     .catch((err) => {
-      res.status(401).send({ message: err.message });
+      new UnauthorizedError(err.message)
     });
 };
 
