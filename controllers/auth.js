@@ -15,9 +15,7 @@ const login = (req, res) => {
 
       res.send({ token });
     })
-    .catch((err) => {
-      return new UnauthorizedError(err.message)
-    });
+    .catch((err) => next(new UnauthorizedError(err.message)));
 };
 
 const createUser = (req, res) => {

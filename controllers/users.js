@@ -3,15 +3,13 @@ const mongoose = require('mongoose');
 const { CastError } = mongoose.Error;
 const { handleErrors, NotFoundError } = require("../errors/errors");
 
-const getUsers = (req, res) => {
+const getUsers = (req, res, next) => {
   user
     .find({})
     .then((users) => {
       res.send({ data: users });
     })
-    .catch((err) => {
-      res.status(500).send(err.message);
-    });
+    .catch((next));
 };
 
 const getUser = (req, res) => {
