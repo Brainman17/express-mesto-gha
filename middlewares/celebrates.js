@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 Joi.objectId = require('joi-objectid')(Joi)
-const { regexAvatarLink, regexLink } = require('../utils/regex');
+const { REGEX_AVATAR_LINK, REGEX_LINK } = require('../utils/regex');
 
 const login = celebrate({
   body: Joi.object().keys({
@@ -8,39 +8,39 @@ const login = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(regexAvatarLink),
+    avatar: Joi.string().regex(REGEX_AVATAR_LINK),
   }),
 });
 
 const getUser = celebrate({
   params: Joi.object().keys({
-    userId: Joi.objectId(),
+    userId: Joi.objectId().required()
   }),
 });
 
 const updateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(30)
   }),
 });
 
 const updateAvatar = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().regex(regexAvatarLink),
+    avatar: Joi.string().required().regex(REGEX_AVATAR_LINK)
   }),
 });
 
 const createCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(regexLink),
+    link: Joi.string().required().regex(REGEX_LINK),
   }),
 });
 
 const checkIdCard = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.objectId(),
+    cardId: Joi.objectId().required()
   }),
 });
 

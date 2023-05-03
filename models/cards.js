@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const validator = require("validator");
+const { REGEX_LINK } = require('../utils/regex');
 
 const cardSchema = new mongoose.Schema({
   name: { //имя карточки
@@ -9,7 +11,8 @@ const cardSchema = new mongoose.Schema({
   },
   link: { //ссылка на картинку
     type: String,
-    required: [true, 'Поле "link" должно быть заполнено']
+    required: [true, 'Поле "link" должно быть заполнено'],
+    validate: { validator: (v) => REGEX_LINK.test(v) }
   },
   owner: { //ссылка на модель автора карточки
     type: mongoose.Schema.Types.ObjectId,

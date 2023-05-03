@@ -18,19 +18,11 @@ app.post('/signup', celebrates.login, createUser);
 
 app.use(auth);
 
-app.use(userRouter);
-app.use(cardRouter);
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.use('*', (req, res) => {
   res.status(404).send({ message: "Данные не найдены!" });
-});
-
-app.use('*', (req, res) => {
-  res.status(400).send({ message: "Неккоректные данные!" });
-});
-
-app.use('*', (req, res) => {
-  res.status(500).send({ message: "Данные не найдены!" });
 });
 
 app.use(errors());

@@ -9,14 +9,14 @@ const {
 } = require("../controllers/cards");
 const celebrates = require('../middlewares/celebrates');
 
-cardRouter.get("/cards", getCards);
+cardRouter.get(getCards);
 
-cardRouter.post("/cards", celebrates.createCard, createCard);
+cardRouter.post(celebrates.createCard, createCard);
 
-cardRouter.delete("/cards/:cardId", celebrates.checkIdCard, deleteCard);
+cardRouter.delete("/:cardId", celebrates.checkIdCard, deleteCard);
 
-cardRouter.put("/cards/:cardId/likes", celebrates.checkIdCard, likeCard);
+cardRouter.put("/:cardId/likes", celebrates.checkIdCard, likeCard);
 
-cardRouter.delete("/cards/:cardId/likes", celebrates.checkIdCard, dislikeCard);
+cardRouter.delete("/:cardId/likes", celebrates.checkIdCard, dislikeCard);
 
 module.exports = { cardRouter };
