@@ -18,8 +18,8 @@ app.post('/signup', celebrates.login, createUser);
 
 app.use(auth);
 
-app.use('/users', userRouter);
-app.use('/cards', cardRouter);
+app.use(userRouter);
+app.use(cardRouter);
 
 app.use('*', (req, res) => {
   res.status(404).send({ message: "Данные не найдены!" });
