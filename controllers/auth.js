@@ -1,7 +1,7 @@
 const user = require("../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { UnauthorizedError } = require("../errors/errors");
+const { UnauthorizedError } = require("../errors/customErrors");
 
 const login = (req, res) => {
   const { email, password } = req.body;
@@ -24,19 +24,8 @@ const createUser = (req, res) => {
   bcrypt
     .hash(password, 10)
     .then((hash) => user.create({ name, about, avatar, email, password: hash }))
-    .then((user) => {
-      res.status(201).send({ data: user });
-    })
-    .catch((e) => {
-      if (e.name === "ValidationError") {
-        const message = Object.values(e.errors)
-          .map((error) => error.message)
-          .join("; ");
-        res.status(400).send({ message });
-      } else {
-        res.status(500).send({ message: "Smth went wrong!" });
-      }
-    });
+    .then((user) => res.status(201).send(user))
+    .catch((err) => handleErrors(err, res));
 };
 
 module.exports = {

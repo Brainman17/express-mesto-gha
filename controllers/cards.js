@@ -1,5 +1,7 @@
 const card = require("../models/cards");
-const { handleErrors, NotFoundError } = require("../errors/errors")
+const { handleErrors } = require("../errors/handleErrors");
+const { NotFoundError } = require("../errors/customErrors")
+const { STATUS_CREATED } = require("../utils/constants")
 
 const getCards = (req, res) => {
   card
@@ -8,7 +10,7 @@ const getCards = (req, res) => {
       res.send({ data: cards });
     })
     .catch((err) => {
-      res.status(500).send(err.message);
+      handleErrors(err, res)
     });
 };
 
@@ -19,17 +21,10 @@ const createCard = (req, res) => {
   card
     .create({ name, link, owner })
     .then((card) => {
-      res.status(201).send({ data: card });
+      res.status(STATUS_CREATED).send({ data: card });
     })
-    .catch((e) => {
-      if (e.name === "ValidationError") {
-        const message = Object.values(e.errors)
-          .map((error) => error.message)
-          .join("; ");
-        res.status(400).send({ message });
-      } else {
-        res.status(500).send({ message: "Smth went wrong!" });
-      }
+    .catch((err) => {
+      handleErrors(err, res)
     });
 };
 

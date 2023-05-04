@@ -1,7 +1,6 @@
 const user = require("../models/users");
-const mongoose = require('mongoose');
-const { CastError } = mongoose.Error;
-const { handleErrors, NotFoundError } = require("../errors/errors");
+const { handleErrors } = require("../errors/handleErrors");
+const { NotFoundError } = require("../errors/customErrors")
 
 const getUsers = (req, res, next) => {
   user
@@ -9,7 +8,7 @@ const getUsers = (req, res, next) => {
     .then((users) => {
       res.send({ data: users });
     })
-    .catch((next));
+    .catch((err) => handleErrors(err, res));
 };
 
 const getUser = (req, res) => {
@@ -18,7 +17,7 @@ const getUser = (req, res) => {
   user
     .findById(userId)
     .orFail(() => {
-      throw new NotFoundError;
+      throw new NotFoundError('Такого пользователя не существует');
     })
     .then((user) => {
       res.send({ data: user });
@@ -32,7 +31,7 @@ const getMe = (req, res) => {
   user
     .findById(userId)
     .orFail(() => {
-      throw new NotFoundError;
+      throw new NotFoundError('Такого пользователя не существует');
     })
     .then((user) => {
       res.send({ data: user });
