@@ -1,14 +1,12 @@
 const express = require('express');
-
 const app = express();
 const mongoose = require('mongoose');
-
 const { PORT = 3000 } = process.env;
-const { errors } = require('celebrate');
 const { userRouter } = require('./routes/users');
 const { cardRouter } = require('./routes/cards');
 const { login, createUser } = require('./controllers/auth');
 const { auth } = require('./middlewares/auth');
+const { errors } = require('celebrate');
 const celebrates = require('./middlewares/celebrates');
 const centralErrorHandler = require('./middlewares/centralErrorHandler');
 
@@ -24,11 +22,10 @@ app.use(auth);
 app.use(userRouter);
 app.use(cardRouter);
 
-app.use('*', centralErrorHandler);
-
 app.use(errors());
-app.use(centralErrorHandler);
+app.use('*', centralErrorHandler)
 
 app.listen(PORT, () => {
   console.log(`Application listening on ${PORT}!`);
 });
+
