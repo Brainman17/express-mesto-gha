@@ -3,18 +3,18 @@ const { handleErrors } = require("../errors/handleErrors");
 const { NotFoundError } = require("../errors/customErrors");
 const { STATUS_CREATED } = require("../utils/constants");
 
-const getCards = (req, res) => {
+const getCards = (req, res, next) => {
   card
     .find({})
     .then((cards) => {
       res.send({ data: cards });
     })
     .catch((err) => {
-      handleErrors(err, res)
+      next(err)
     });
 };
 
-const createCard = (req, res) => {
+const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
 
@@ -24,11 +24,11 @@ const createCard = (req, res) => {
       res.status(STATUS_CREATED).send({ data: card });
     })
     .catch((err) => {
-      handleErrors(err, res)
+      next(err)
     });
 };
 
-const deleteCard = (req, res) => {
+const deleteCard = (req, res, next) => {
   card
     .findByIdAndRemove(req.params.cardId)
     .orFail(() => {
@@ -38,11 +38,11 @@ const deleteCard = (req, res) => {
       res.send({ data: card })
     })
     .catch((err) => {
-      handleErrors(err, res)
+      next(err)
     });
 };
 
-const likeCard = (req, res) => {
+const likeCard = (req, res, next) => {
   card
     .findByIdAndUpdate(
       req.params.cardId,
@@ -57,10 +57,10 @@ const likeCard = (req, res) => {
     .then((card) =>  {
       res.send({ data: card })
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
-const dislikeCard = (req, res) => {
+const dislikeCard = (req, res, next) => {
   card
     .findByIdAndUpdate(
       req.params.cardId,
@@ -76,7 +76,7 @@ const dislikeCard = (req, res) => {
       res.send({ data: card })
     })
     .catch((err) => {
-      handleErrors(err, res);
+      next(err);
     });
 };
 

@@ -19,14 +19,15 @@ const login = (req, res) => {
     .catch((err) => next(new UnauthorizedError(err.message)));
 };
 
-const createUser = (req, res) => {
+const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
 
   bcrypt
     .hash(password, 10)
     .then((hash) => user.create({ name, about, avatar, email, password: hash }))
     .then((user) => res.status(STATUS_CREATED).send(user))
-    .catch((err) => handleErrors(err, res));
+    .catch(err => next(err));
+    // .catch((err) => handleErrors(err, res));
 };
 
 module.exports = {

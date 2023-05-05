@@ -8,10 +8,10 @@ const getUsers = (req, res, next) => {
     .then((users) => {
       res.send({ data: users });
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
-const getUser = (req, res) => {
+const getUser = (req, res, next) => {
   const { userId } = req.params;
 
   user
@@ -22,10 +22,10 @@ const getUser = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
-const getMe = (req, res) => {
+const getMe = (req, res, next) => {
   const { userId } = req.params;
 
   user
@@ -36,10 +36,10 @@ const getMe = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
-const updateUser = (req, res) => {
+const updateUser = (req, res, next) => {
   const userId = req.user._id;
 
   user
@@ -51,10 +51,10 @@ const updateUser = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
-const updateAvatar = (req, res) => {
+const updateAvatar = (req, res, next) => {
   const userId = req.user._id;
 
   user
@@ -66,7 +66,7 @@ const updateAvatar = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => handleErrors(err, res));
+    .catch((err) => next(err));
 };
 
 module.exports = {
