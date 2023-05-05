@@ -27,7 +27,6 @@ const createUser = (req, res, next) => {
     .then((hash) => user.create({ name, about, avatar, email, password: hash }))
     .then((user) => res.status(STATUS_CREATED).send(user))
     .catch(err => next(err));
-    // .catch((err) => handleErrors(err, res));
 };
 
 module.exports = {

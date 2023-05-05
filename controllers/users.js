@@ -1,5 +1,4 @@
 const user = require("../models/users");
-const { handleErrors } = require("../errors/handleErrors");
 const { NotFoundError } = require("../errors/customErrors")
 
 const getUsers = (req, res, next) => {
