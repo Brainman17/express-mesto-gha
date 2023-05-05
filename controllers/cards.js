@@ -1,7 +1,7 @@
 const card = require("../models/cards");
 const { handleErrors } = require("../errors/handleErrors");
-const { NotFoundError } = require("../errors/customErrors")
-const { STATUS_CREATED } = require("../utils/constants")
+const { NotFoundError } = require("../errors/customErrors");
+const { STATUS_CREATED } = require("../utils/constants");
 
 const getCards = (req, res) => {
   card

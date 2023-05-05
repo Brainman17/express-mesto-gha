@@ -2,13 +2,20 @@ const { celebrate, Joi } = require('celebrate');
 Joi.objectId = require('joi-objectid')(Joi)
 const { REGEX_AVATAR_LINK, REGEX_LINK } = require('../utils/regex');
 
-const login = celebrate({
+const signUp = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().regex(REGEX_AVATAR_LINK),
+  }),
+});
+
+const signIn = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
   }),
 });
 
@@ -45,5 +52,5 @@ const checkIdCard = celebrate({
 });
 
 module.exports = {
-  login, getUser, updateUser, updateAvatar, createCard, checkIdCard,
+  signUp, signIn, getUser, updateUser, updateAvatar, createCard, checkIdCard,
 };
