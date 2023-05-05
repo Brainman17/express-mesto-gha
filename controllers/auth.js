@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../errors/customErrors");
 const { STATUS_CREATED } = require("../utils/constants");
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
 
   return user
@@ -16,7 +16,7 @@ const login = (req, res) => {
 
       res.send({ token });
     })
-    .catch((err) => next(new UnauthorizedError(err.message)));
+    .catch((err) => next(err));
 };
 
 const createUser = (req, res, next) => {
