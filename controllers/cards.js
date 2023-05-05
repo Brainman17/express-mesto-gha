@@ -47,8 +47,7 @@ const likeCard = (req, res, next) => {
       req.params.cardId,
       {
         $addToSet: { likes: req.user._id },
-      },
-      { new: true }
+      }
     )
     .orFail(() => {
       throw new NotFoundError("Карточка с таким id не существует!")
@@ -65,8 +64,7 @@ const dislikeCard = (req, res, next) => {
       req.params.cardId,
       {
         $pull: { likes: req.user._id },
-      },
-      { new: true }
+      }
     )
     .orFail(() => {
       throw new NotFoundError("Карточка с таким id не существует!")
