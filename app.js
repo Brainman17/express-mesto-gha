@@ -23,7 +23,7 @@ app.use(auth);
 app.use(userRouter);
 app.use(cardRouter);
 
-app.use("*", (err, res, next) => {
+app.use("*", (res, req, next) => {
   const err = new NotFoundError("Данные не найдены!");
   next(err);
 });
@@ -35,3 +35,8 @@ app.use(centralErrorHandler)
 app.listen(PORT, () => {
   console.log(`Application listening on ${PORT}!`);
 });
+
+// Сейчас пользователь может удалить чужую карточку.
+// Обратите внимание на метод БД, которые вы используете для поиска — чаще всего проблема в нем.
+// ------
+// По поводу этой ошибки Лиза говорила, что ок.
